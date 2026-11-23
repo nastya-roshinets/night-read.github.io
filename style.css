@@ -44,11 +44,12 @@ header {
     color: var(--text-main);
 }
 
-.logo-box img, .logo-svg {
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
+.logo-box img {
+    width: 46px;
+    height: 46px;
     object-fit: cover;
+    border-radius: 12px; /* або 50%, якщо хочеш ідеальне коло */
+    border: 1.5px solid #0D0D0D; /* тонкий чорний контур */
 }
 
 .logo-title {
