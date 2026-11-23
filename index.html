@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightRead — Незалежні рекомендації книг на вечір</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Шапка сайту -->
+    <header>
+        <a href="#" class="logo-box" onclick="switchTab('catalog'); return false;">
+            <img src="https://thumbs.dreamstime.com/b/none-267920246.jpg" alt="NightRead">
+            <div>
+                <span class="logo-title">NightRead</span>
+                <span class="logo-subtitle">Рекомендації на вечір</span>
+            </div>
+        </a>
+
+        <nav>
+            <button class="nav-btn active" id="btn-catalog" onclick="switchTab('catalog')">Пошук книг</button>
+            <button class="nav-btn" id="btn-top" onclick="switchTab('top')">Топ-10 книг 2026</button>
+            <button class="nav-btn" id="btn-about" onclick="switchTab('about')">Про проєкт</button>
+        </nav>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Пошук за назвою або автором..." oninput="renderBooks()">
+        </div>
+    </header>
+
+    <!-- Основний блок -->
+    <div class="container">
+        <!-- Ліва бічна панель з фільтрами -->
+        <aside id="sidebarFilters">
+            <h3>Фільтри та сортування</h3>
+            
+            <div class="filter-group">
+                <label for="genreFilter">Жанр літератури</label>
+                <select id="genreFilter" onchange="renderBooks()">
+                    <option value="all">Усі жанри (20)</option>
+                    <option value="Трилер">Трилер / Детектив</option>
+                    <option value="Фантастика">Наукова фантастика</option>
+                    <option value="Фентезі">Фентезі / Містика</option>
+                    <option value="Психологія">Психологія / Нон-фікшн</option>
+                    <option value="Класика">Класика / Драма</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="timeFilter">Час на читання</label>
+                <select id="timeFilter" onchange="renderBooks()">
+                    <option value="all">Будь-який час</option>
+                    <option value="evening">На один вечір (до 3 год)</option>
+                    <option value="weekend">На вихідні (4–7 год)</option>
+                    <option value="long">Довге занурення (8+ год)</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="sortFilter">Сортувати за</label>
+                <select id="sortFilter" onchange="renderBooks()">
+                    <option value="rating">Найвищим рейтингом</option>
+                    <option value="votes">Кількістю оцінок</option>
+                    <option value="time">Часом читання (від коротких)</option>
+                </select>
+            </div>
+
+            <button class="btn-reset" onclick="resetFilters()">Скинути фільтри</button>
+        </aside>
+
+        <!-- Контентна частина -->
+        <main>
+            <!-- Вкладка 1: Каталог -->
+            <section id="tab-catalog" class="section-view active">
+                <div class="page-header">
+                    <h1>Що почитати сьогодні ввечері?</h1>
+                    <p>Обирай серед 20 рекомендованих книг за настроєм та вільним часом. Натисни на будь-яку картку книги, щоб прочитати повну анотацію та залишити анонімну оцінку.</p>
+                </div>
+                <div class="books-grid" id="booksGrid"></div>
+            </section>
+
+            <!-- Вкладка 2: Топ-10 книг 2026 (Таблиця) -->
+            <section id="tab-top" class="section-view">
+                <div class="page-header">
+                    <h1>Топ-10 книг 2026 року за незалежним рейтингом</h1>
+                    <p>Рейтинг оновлюється автоматично на основі анонімних оцінок читачів порталу.</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Обкладинка</th>
+                                <th>Назва книги</th>
+                                <th>Автор</th>
+                                <th>Жанр</th>
+                                <th>Час читання</th>
+                                <th>Голосів</th>
+                                <th>Середній бал</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Вкладка 3: Про проєкт -->
+            <section id="tab-about" class="section-view">
+                <div class="about-card">
+                    <h2>Про портал NightRead</h2>
+                    <p><strong>NightRead</strong> — це незалежний рекомендаційний сервіс для тих, хто шукає цікаву книгу на вечір без нав'язливої реклами та проплачених рецензій.</p>
+                    <p>Ми не продаємо електронні версії та не є онлайн-бібліотекою. Наша мета — допомогти вам обрати ідеальну історію під ваш вільний час та настрій.</p>
+                    <h2>Принципи нашої платформи:</h2>
+                    <ul>
+                        <li><strong>Повна анонімність:</strong> для виставлення оцінки не потрібна реєстрація чи прив'язка соцмереж.</li>
+                        <li><strong>Фокус на часі:</strong> кожна книга має орієнтовний час прочитання, щоб ви знали, чи встигнете дочитати її за один вечір.</li>
+                        <li><strong>Відкритість:</strong> кожен відгук миттєво впливає на загальний бал книги у таблиці лідерів 2026 року.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Модальне вікно (Детальна сторінка книги + Форма оцінювання) -->
+    <div class="modal-overlay" id="bookModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModalDirect()">&times;</button>
+            
+            <div class="modal-top-grid">
+                <img id="modalCover" src="" alt="Обкладинка книги" class="modal-cover-img">
+                <div>
+                    <h2 id="modalTitle">Назва книги</h2>
+                    <p id="modalAuthor" class="modal-author">Автор</p>
+                    
+                    <div class="modal-tags">
+                        <span class="tag" id="modalGenre">Жанр</span>
+                        <span class="tag" id="modalTime">Час</span>
+                        <span class="tag" id="modalRating">★ 5.0</span>
+                    </div>
+
+                    <div class="modal-annotation-block">
+                        <h4>Анотація:</h4>
+                        <p id="modalFullDesc" class="modal-desc">Повний опис книги...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Форма анонімної оцінки -->
+            <form class="review-form" onsubmit="submitReview(event)">
+                <h4>Оцінити цю книгу анонімно</h4>
+                <div class="form-row">
+                    <label for="userScore">Ваша оцінка (від 1 до 5):</label>
+                    <select id="userScore" required>
+                        <option value="5">★★★★★ (5 — Чудова книга на вечір)</option>
+                        <option value="4">★★★★☆ (4 — Варто почитати)</option>
+                        <option value="3">★★★☆☆ (3 — Нормально, на один раз)</option>
+                        <option value="2">★★☆☆☆ (2 — Слабкувато)</option>
+                        <option value="1">★☆☆☆☆ (1 — Не рекомендую)</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="userComment">Коротке враження (необов'язково):</label>
+                    <textarea id="userComment" rows="2" placeholder="Напишіть, чим сподобалась або не сподобалась книга..."></textarea>
+                </div>
+                <button type="submit" class="btn-open">Опублікувати оцінку</button>
+            </form>
+
+            <!-- Список відгуків -->
+            <div class="reviews-list">
+                <h4>Анонімні відгуки читачів (<span id="reviewsCount">0</span>):</h4>
+                <div id="modalReviewsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 NightRead — Освітній проєкт. Всі права захищені.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
